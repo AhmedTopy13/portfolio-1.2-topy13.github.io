@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio - Ahmed Topy</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap");
+      body {
+        margin: 0;
+        font-family: "Tajawal", serif;
+        background-color: #121212;
+        color: #fff;
+        overflow-x: hidden;
+      }
+      header {
+        text-align: center;
+        padding: 2rem 1rem;
+        animation: fadeIn 2s ease-in-out;
+      }
+      header h1 {
+        font-size: 3rem;
+        margin-bottom: 0.5rem;
+      }
+      header p {
+        font-size: 1.2rem;
+        color: #aaa;
+      }
+      .portfolio-container {
+        display: flex; /* استخدام flexbox للتمرير */
+        flex-direction: column; /* التمرير عمودي */
+        overflow-y: auto; /* تمكين التمرير العمودي */
+        scroll-snap-type: y mandatory; /* تفعيل التقاط العنصر عند التمرير */
+        height: 100vh; /* ارتفاع العنصر الأب يكون مساويًا لارتفاع نافذة المتصفح */
+      }
+
+      .portfolio-item {
+        direction: rtl;
+        scroll-snap-align: start; /* جعل العنصر يلتقط عند بداية العنصر */
+        margin: 10px 0; /* ترك مسافة بين العناصر */
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        margin: 2rem auto;
+        padding: 1rem;
+        max-width: 1200px;
+      }
+      .portfolio-title {
+        direction: rtl;
+        font-size: 36px; /* حجم الخط */
+        font-weight: bold; /* جعل الخط سميك */
+        text-align: center; /* محاذاة العنوان إلى المنتصف */
+        margin-bottom: 20px; /* مسافة بين العنوان والصورة */
+        color: #333; /* اللون */
+      }
+      .portfolio-item img {
+        max-width: 300px;
+        max-height: 600px;
+        margin: 1rem;
+        border-radius: 10px;
+        transition: transform 0.3s;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      }
+      .portfolio-item img:hover {
+        transform: scale(1.05);
+      }
+      .portfolio-item .details {
+        max-width: 600px;
+        padding: 1rem;
+        text-align: center;
+      }
+      .portfolio-item .details h2 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+      }
+      .portfolio-item .details p {
+        font-size: 1rem;
+        color: #bbb;
+      }
+      .social-links {
+        text-align: center;
+        margin: 2rem 0;
+        display: flex;
+        justify-content: space-around; /* المسافة بين الصور */
+        gap: 20px; /* المسافة بين الصور */
+      }
+      .social-links a {
+        color: #00adb5;
+        margin: 0 1rem;
+        font-size: 1.5rem;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+      .social-links a:hover {
+        color: #ff5722;
+      }
+      footer {
+        text-align: center;
+        padding: 1rem;
+        background-color: #1f1f1f;
+        color: #888;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .image-hover-effect img {
+        width: 30px; /* الحجم الأساسي للصورة */
+        height: auto;
+        transition: transform 0.3s ease, filter 0.3s ease; /* تأثير التكبير والتلوين */
+        filter: grayscale(1); /* الصورة تكون باللون الرمادي في البداية */
+      }
+      .image-hover-effect img:hover {
+        transform: scale(1.1); /* تكبير الصورة */
+        filter: grayscale(0); /* إلغاء التدرج الرمادي */
+      }
+
+      /* كود الخلفية*/
+      .background::before,
+      .background::after {
+        content: "";
+        position: relative;
+        width: 300px;
+        height: 300px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        animation: moveBackground 10s linear infinite;
+      }
+
+      .background::before {
+        top: -50px;
+        left: -50px;
+        animation-delay: 0s;
+      }
+
+      .background::after {
+        bottom: -50px;
+        right: -50px;
+        animation-delay: 5s;
+      }
+
+      /* حركة الخلفية */
+      @keyframes moveBackground {
+        0% {
+          transform: translateX(0) translateY(0);
+        }
+        100% {
+          transform: translateX(100hw) translateY(100vw);
+        }
+      }
+
+      /* حركة الدوائر */
+      .circle {
+        position: absolute;
+        width: 80px; /* حجم أصغر للدوائر */
+        height: 80px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        animation: animateCircle 10s linear infinite;
+      }
+
+      /* أماكن وضع الدوائر بشكل عشوائي */
+      .circle:nth-child(1) {
+        animation-duration: 25s;
+      }
+
+      .circle:nth-child(2) {
+        animation-duration: 15s;
+      }
+
+      .circle:nth-child(3) {
+        animation-duration: 10s;
+      }
+
+      .circle:nth-child(4) {
+        animation-duration: 20s;
+      }
+
+      /* حركة الدوائر بشكل عشوائي */
+      .circle {
+        --start-x: calc(100vw * random());
+        --start-y: calc(100vh * random());
+        --end-x: calc(100vw * random());
+        --end-y: calc(100vh * random());
+      }
+
+      @keyframes animateCircle {
+        0% {
+          transform: translate(var(--start-x), var(--start-y));
+          opacity: 0; /* بداية الشفافية صفر */
+          scale: 0.2;
+        }
+        25% {
+          transform: translate(
+            var(--mid-x),
+            var(--mid-y)
+          ); /* نقطة منتصف الحركة */
+          opacity: 1; /* الظهور تدريجياً */
+        }
+        50% {
+          transform: translate(var(--end-x), var(--end-y)); /* نقطة النهاية */
+          opacity: 0.5; /* التلاشي الجزئي */
+          scale: 2;
+        }
+        100% {
+          transform: translate(
+            var(--start-x),
+            var(--start-y)
+          ); /* العودة لنقطة البداية */
+          opacity: 1; /* العودة للظهور */
+        }
+      }
+      /*نهاية كود الخلفية*/
+    </style>
+  </head>
+  <body>
+    <div
+      class="background"
+      style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100hw;
+        z-index: -1;
+        animation: moveBackground 15s linear infinite;
+      "
+    >
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
+    </div>
+    <script>
+      document.querySelectorAll(".circle").forEach((circle) => {
+        let randomX1 = Math.random() * 100; /* نقطة بداية عشوائية */
+        let randomY1 = Math.random() * 100;
+        let randomX2 = Math.random() * 100; /* نقطة منتصف عشوائية */
+        let randomY2 = Math.random() * 100;
+        let randomX3 = Math.random() * 100; /* نقطة نهاية عشوائية */
+        let randomY3 = Math.random() * 100;
+        let randoms = Math.random() * 2; /* نقطة نهاية عشوائية */
+
+        circle.style.setProperty("--start-x", randomX1 + "vw");
+        circle.style.setProperty("--start-y", randomY1 + "vh");
+        circle.style.setProperty("--mid-x", randomX2 + "vw");
+        circle.style.setProperty("--mid-y", randomY2 + "vh");
+        circle.style.setProperty("--end-x", randomX3 + "vw");
+        circle.style.setProperty("--end-y", randomY3 + "vh");
+        circle.style.setProperty("--scale", randoms);
+      });
+    </script>
+    <header>
+      <div
+        style="
+          height: 100vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        "
+      >
+        <div class="typing-container">
+          <span id="typing" style="font-family: 'Tajawal', serif"></span>
+          <div class="cursor"></div>
+        </div>
+      </div>
+
+      <style>
+        .typing-container {
+          font-family: "Tajawal", serif;
+          font-size: 3.9rem;
+          font-weight: bolder;
+          color: rgba(255, 255, 255, 0.9);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .cursor {
+          width: 20px;
+          height: 5px;
+          align-self: flex-end;
+          background-color: #d8dcc7;
+          margin-left: 5px;
+          animation: blink 0.8s step-end infinite;
+        }
+
+        @keyframes blink {
+          0% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0;
+          }
+        }
+      </style>
+
+      <script>
+        const text = "Ahmed Topy"; // النص اللي عاوز تكتبه
+        const typingElement = document.getElementById("typing");
+        let index = 0;
+
+        function type() {
+          if (index < text.length) {
+            typingElement.textContent += text.charAt(index);
+            index++;
+            setTimeout(type, 150); // سرعة الكتابة
+          }
+        }
+
+        // بدء الكتابة
+        type();
+        document.addEventListener("DOMContentLoaded", () => {
+          const targetElement = document.querySelector(".typing-container");
+
+          // دالة التمرير البطيء مع الأنيميشن
+          function smoothScrollTo(element, duration) {
+            const start = window.pageYOffset; // الموضع الحالي
+            const end = element.getBoundingClientRect().top + start; // الموضع المستهدف
+            const distance = end - start;
+            let startTime = null;
+
+            function animationScroll(currentTime) {
+              if (!startTime) startTime = currentTime;
+
+              const elapsedTime = currentTime - startTime;
+              const progress = Math.min(elapsedTime / duration, 1); // نسبة التقدم (0 إلى 1)
+              const ease = easeInOutQuad(progress); // دالة تسهيل للحركة
+
+              window.scrollTo(0, start + distance * ease);
+
+              if (progress < 1) {
+                requestAnimationFrame(animationScroll); // استمر بالأنيميشن
+              }
+            }
+
+            // دالة تسهيل (Ease In-Out)
+            function easeInOutQuad(t) {
+              return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+            }
+
+            requestAnimationFrame(animationScroll);
+          }
+
+          // تنفيذ التمرير البطيء بعد تحميل الصفحة
+          setTimeout(() => {
+            smoothScrollTo(targetElement, 3000); // مدة التمرير 3 ثوانٍ
+          }, 2000); // تأخير 1 ثانية قبل بدء التمرير
+        });
+      </script>
+
+      <p>مبرمج مستقل وعندي خبرة في تطوير تطبيقات وبرامج متنوعة.</p>
+    </header>
+    <div
+      class="portfolio-item"
+      data-static-image="imgs/3papers.jpg"
+      data-gif="imgs/3papers.gif"
+    >
+      <h1 class="portfolio-title" style="direction: ltr">3 Papers</h1>
+      <img src="imgs/3papers.jpg" alt="برنامج خلفيات متحركة" />
+      <div class="details" style="text-align: start; direction: rtl">
+        <h2>برنامج خلفيات متحركة</h2>
+        <p>برنامج مميز لإنشاء وتخصيص خلفيات متحركة للأندرويد.</p>
+        <p>
+          1. <strong>إضافة تأثيرات متحركة على الصور:</strong><br />
+          - بدلاً من تحريك الصورة نفسها، يتيح لك البرنامج إضافة تأثيرات متحركة
+          (مثل الرسوم المتحركة) على الصورة. هذه التأثيرات تتفاعل مع الصوت أو
+          الموسيقى التي تشغلها على الهاتف.<br />
+          - الرسوم المتحركة هذه قد تكون مثل الحركات الخفيفة أو تأثيرات خاصة
+          تتحرك على سطح الصورة، مثل نقاط تتناثر أو خطوط متحركة، وليس تحريك
+          الصورة نفسها.
+        </p>
+        <p>
+          2. <strong>التفاعل مع الصوت:</strong><br />
+          - البرنامج يتيح للصورة أن تتفاعل مع الصوت بحيث تتغير التأثيرات أو
+          الرسوم المتحركة بناءً على الإيقاع أو الصوت الذي يتم تشغيله. مثلاً،
+          عندما يتم تشغيل أغنية، قد تظهر رسوم متحركة (مثل دوائر تتنقل أو خطوط
+          تتحرك) تتفاعل مع الصوت.
+        </p>
+        <p>
+          3. <strong>اختصارات سريعة للوصول:</strong><br />
+          - يمكنك إضافة اختصارات للتطبيق على الشاشة الرئيسية أو في شريط
+          التنبيهات للتحكم السريع في تغيير التأثيرات المتحركة أو إيقافها، مما
+          يجعل الوصول إلى إعدادات البرنامج أسهل.
+        </p>
+        <p>
+          4. <strong>إضافة رسم متحرك على الصور:</strong><br />
+          - يمكن للمستخدم رفع أي صورة على البرنامج، ثم يضاف إليها رسم متحرك (مثل
+          مؤثرات أو رسومات تضاف فوق الصورة) دون تحريك الصورة نفسها. هذه الرسوم
+          يمكن أن تكون مرتبطة بالصوت وتتحرك بالتزامن مع الموسيقى.<br />
+          - الرسوم المتحركة يمكن أن تكون تأثيرات بسيطة مثل "وميض"، "دوران" أو
+          حتى "أضواء متغيرة" تظهر على الصورة.
+        </p>
+        <p>
+          5. <strong>واجهة مستخدم بسيطة وسهلة:</strong><br />
+          - واجهة التطبيق تتيح لك التحكم الكامل في إضافة التأثيرات المتحركة
+          بسهولة دون الحاجة لأي خبرة في التصميم.<br />
+          - يمكنك تغيير تأثيرات الرسوم المتحركة وتعديلها بما يتناسب مع ذوقك.
+        </p>
+
+        <p>
+          <strong>الفوائد:</strong><br />
+          • <strong>إضافة تأثيرات متحركة بسيطة:</strong> بدلاً من تحريك الصورة
+          نفسها، يمكنك إضافة تأثيرات تجعل الصورة أكثر ديناميكية دون تغيير شكلها
+          الأساسي.<br />
+          • <strong>التفاعل مع الموسيقى:</strong> الرسوم المتحركة تتفاعل مع
+          الموسيقى التي تستمع إليها.<br />
+          • <strong>سهولة التحكم:</strong> عبر الاختصارات، يمكنك الوصول سريعًا
+          إلى إعدادات البرنامج أو تغيير التأثيرات المتحركة.<br />
+          • <strong>تصميم بسيط وسهل:</strong> واجهة البرنامج تجعل من السهل تخصيص
+          الصور وجعلها أكثر حيوية.
+        </p>
+      </div>
+    </div>
+    <div
+      class="portfolio-item"
+      data-static-image="imgs/horus.jpg"
+      data-gif="imgs/horus.gif"
+    >
+      <h1 class="portfolio-title" style="direction: ltr">Horus Eye 3.9</h1>
+      <img src="imgs/horus.jpg" alt="برنامج خلفيات متحركة" />
+      <div class="details" style="text-align: start; direction: rtl">
+        <h2>برنامج اختبار اختراق</h2>
+        <p>
+          برنامج <strong>عين حورس</strong> هو برنامج متقدم لاختبار اختراق أجهزة
+          الأندرويد، يهدف إلى تقييم مدى أمان الأجهزة من خلال اختراق البيانات
+          الحساسة الموجودة عليها. يتيح البرنامج اختبار مجموعة من الجوانب
+          المختلفة للأجهزة والأنظمة، وتقييم قدرة الحماية ضد محاولات الوصول غير
+          المصرح به. يقدم البرنامج مجموعة من الأدوات لاختبار اختراق العناصر
+          التالية: <br /><br />
+          <strong>1. اختبار اختراق أرقام الهواتف:</strong>
+          <br />
+          يتيح البرنامج التحقق من وجود ثغرات يمكن استغلالها لاستخراج أرقام
+          الهواتف المخزنة على الجهاز، سواء أكانت أرقام مسجلة في جهات الاتصال أو
+          أرقام تم التواصل معها عبر الرسائل أو المكالمات.
+          <br /><br />
+          <strong>2. سجل المكالمات:</strong>
+          <br />
+          يمكن للبرنامج اختراق سجل المكالمات على الجهاز والوصول إلى تفاصيل
+          المكالمات، بما في ذلك المكالمات الواردة والصادرة وتواريخ ومدة
+          المكالمات.
+          <br /><br />
+          <strong>3. الرسائل:</strong>
+          <br />
+          يوفر البرنامج إمكانية الوصول إلى الرسائل النصية، سواء كانت رسائل SMS
+          أو رسائل الوسائط المتعددة (MMS)، بما في ذلك قراءة الرسائل المرسلة
+          والواردة ومحتوياتها.
+          <br /><br />
+          <strong>4. الكاميرا والصور:</strong>
+          <br />
+          يقوم البرنامج باختبار إمكانية الوصول إلى الكاميرا واستخراج الصور
+          والفيديوهات المخزنة على الجهاز. بالإضافة إلى ذلك، يمكنه التحكم
+          بالكاميرا لالتقاط صور أو تسجيل فيديوهات بدون علم المستخدم.
+          <br /><br />
+          <strong>5. الشاشة:</strong>
+          <br />
+          يتيح اختبار اختراق الشاشة، مما يتيح للبرنامج مراقبة جميع الأنشطة على
+          الشاشة (مثل النقرات والحركات) والوصول إلى لقطات شاشة أو تسجيل الأنشطة
+          في الوقت الفعلي.
+          <br /><br />
+          <strong>6. الحسابات:</strong>
+          <br />
+          يقوم البرنامج بمحاكاة محاولات للوصول إلى الحسابات المخزنة على الجهاز،
+          مثل حسابات البريد الإلكتروني، الشبكات الاجتماعية (مثل الفيسبوك
+          وواتساب)، وحسابات التطبيقات الأخرى.
+          <br /><br />
+          <strong>7. الإشعارات:</strong>
+          <br />
+          يتضمن اختبار اختراق الإشعارات الواردة من التطبيقات المختلفة مثل
+          الواتساب والفيسبوك وغيرها. يتيح للمهاجم الوصول إلى إشعارات الرسائل
+          والأنشطة في الوقت الفعلي على الشاشة الرئيسية للجهاز.
+          <br /><br />
+          <strong>8. اختبار الكتابة:</strong>
+          <br />
+          يمكن للبرنامج تتبع كل ما يتم كتابته على الجهاز (مثل النصوص التي تم
+          إدخالها في الرسائل أو التطبيقات الأخرى) وتسجيل الكلمات المكتوبة للحصول
+          على معلومات حساسة.
+          <br /><br />
+          <strong>الفوائد والميزات الرئيسية للبرنامج:</strong>
+          <br />
+          • <strong>اختراق شامل:</strong> يتضمن البرنامج اختبارات لاختراق جميع
+          البيانات الحساسة الموجودة على جهاز الأندرويد مثل المكالمات، الرسائل،
+          الصور، الكاميرا، والشاشة.<br />
+          • <strong>اختبار الأمان الفعلي:</strong> يساعد البرنامج المستخدمين
+          والمطورين في اختبار كيفية تأثر الأجهزة بالهجمات المحتملة.<br />
+          • <strong>تحليل الثغرات:</strong> يوفر تقارير مفصلة حول الثغرات
+          الأمنية الموجودة، ما يتيح للمستخدمين إمكانية إصلاحها.<br />
+          • <strong>دعم العديد من التطبيقات:</strong> يتيح اختبار اختراق
+          الإشعارات من تطبيقات مشهورة مثل الواتساب والفيسبوك، مما يوفر حماية
+          للمستخدمين ضد الهجمات المحتملة.<br />
+          • <strong>سهولة الاستخدام:</strong> يحتوي البرنامج على واجهة سهلة
+          الاستخدام لتمكين حتى المبتدئين في مجال الأمان من تنفيذ اختبارات
+          اختراق. <br /><br />
+          <strong>ملاحظة مهمة:</strong>
+          <br />
+          يجب استخدام برنامج <strong>عين حورس</strong> فقط في بيئات اختبارية أو
+          مع الأجهزة التي تملك إذنًا صريحًا لاختبار أمانها. استخدامه في اختراق
+          الأجهزة بدون إذن قد يكون مخالفًا للقوانين. <br /><br />
+          باختصار، يعتبر <strong>عين حورس</strong> أداة قوية لاختبار اختراق
+          أجهزة الأندرويد، وتقديم تقرير شامل عن الثغرات الأمنية التي قد تهدد
+          خصوصية المستخدم وسلامته الرقمية.
+        </p>
+      </div>
+    </div>
+
+    <div
+      class="portfolio-item"
+      data-static-image="imgs/tabibty.jpg"
+      data-gif="imgs/tabibty.gif"
+    >
+      <h1 class="portfolio-title" style="direction: ltr">طبيبتي</h1>
+      <img src="imgs/tabibty.jpg" alt="tabibty" />
+      <div class="details" style="text-align: start; direction: rtl">
+        <h2>دليل طبيبات نسائي</h2>
+        <p>
+          برنامج <strong>دليل طبيبات نسائي</strong> هو تطبيق مبتكر يهدف إلى
+          تسهيل الوصول إلى خدمات الرعاية الصحية المقدمة من طاقم نسائي بالكامل،
+          سواء كان ذلك في المستشفيات أو العيادات الخاصة. البرنامج يضع في
+          اعتباراته أولويات المرأة في الحفاظ على الخصوصية والحياء، ويتيح لها
+          اختيار الطبيبة أو المستشفى التي ترغب في التعامل معها بكل راحة وأمان.
+        </p>
+        <p>
+          <strong>الميزات الرئيسية:</strong>
+        </p>
+        <ul>
+          <li>
+            <strong>عرض معلومات مفصلة:</strong>
+            <ul>
+              <li>
+                يوفر البرنامج معلومات شاملة حول
+                <strong>عنوان العيادات والمستشفيات</strong>، مع
+                <strong>أرقام التليفونات</strong> الخاصة بها لتسهيل التواصل
+                المباشر.
+              </li>
+              <li>
+                يتيح لك معرفة ما إذا كان
+                <strong>الطاقم الطبي نسائيًا بالكامل</strong>، مما يوفر راحة
+                واطمئنان للمستخدمات اللواتي يبحثن عن خدمات صحية تحت إشراف نسائي.
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>تصنيفات متعددة:</strong>
+            <ul>
+              <li>
+                يحتوي البرنامج على <strong>تصنيفات طبية</strong> متنوعة لتسهيل
+                الاختيار. يمكن للمستخدم تحديد نوع الخدمة الطبية التي يحتاجها مثل
+                <strong>نساء وولادة</strong>، <strong>باطنة</strong>،
+                <strong>جراحة</strong>، أو أي تخصص آخر.
+              </li>
+              <li>
+                يتضمن أيضًا تصنيفات مثل <strong>العمليات</strong>،
+                <strong>الجراحة</strong>، وأمور أخرى لتحديد ما يتناسب مع
+                احتياجات المستخدم.
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>فلترة متقدمة:</strong>
+            <ul>
+              <li>
+                يتيح للمستخدمين <strong>فلترة البحث</strong> وفقًا لعدة معايير
+                مثل:
+                <ul>
+                  <li>
+                    <strong>نوع الطبيبة</strong> (سواء كانت نسائية أو غيرها).
+                  </li>
+                  <li>
+                    <strong>المحافظة</strong>: يمكنك تحديد المنطقة أو المدينة
+                    التي تود البحث فيها.
+                  </li>
+                  <li>
+                    <strong>اسم الطبيبة</strong>: في حال كنت تبحث عن طبيبة
+                    معينة.
+                  </li>
+                  <li>
+                    <strong>اسم المكان</strong>: للبحث عن العيادات أو المستشفيات
+                    بالاسم.
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>معلومات تفصيلية عن العيادات:</strong>
+            <ul>
+              <li>
+                يعرض البرنامج <strong>العيادات</strong> التي تعمل بها الطبيبة،
+                مما يسهل على المستخدمين معرفة المكان الذي يمكنهم فيه الحصول على
+                الخدمات الطبية المطلوبة.
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <p>
+          <strong>الفوائد:</strong>
+        </p>
+        <ul>
+          <li>
+            <strong>الخصوصية والراحة</strong>: يتيح التطبيق للنساء الحصول على
+            خدمات طبية تحت إشراف طاقم نسائي بالكامل، مما يعزز الراحة والخصوصية.
+          </li>
+          <li>
+            <strong>سهولة البحث</strong>: يساعدك البرنامج في العثور بسرعة على
+            الطبيبة المناسبة حسب التخصص الذي تحتاجه.
+          </li>
+          <li>
+            <strong>توفير الوقت والجهد</strong>: من خلال الفلترة والتصنيفات
+            المتعددة، يمكنك تحديد المكان والطبيبة حسب احتياجاتك وتوفير الوقت في
+            البحث.
+          </li>
+        </ul>
+        <p>
+          <strong>الملاحظة:</strong>
+        </p>
+        <p>
+          يعد <strong>دليل طبيبات نسائي</strong> أداة مثالية للبحث عن الرعاية
+          الصحية النسائية المتخصصة بسهولة، مع ضمان الخصوصية والراحة للنساء في
+          اختيار العناية الطبية المناسبة لهن.
+        </p>
+      </div>
+    </div>
+
+    <div
+      class="portfolio-item"
+      data-static-image="imgs/excel.jpg"
+      data-gif="imgs/excel.jpg"
+    >
+      <img src="imgs/excel.jpg" alt="كورس Excel" />
+      <div class="details" style="text-align: start; direction: rtl">
+        <h2>كورس Excel</h2>
+        <p>كورس شامل لتعلم Excel من الأساسيات للاحتراف.</p>
+        <p>
+          كورس <strong>إكسيل</strong> هو كورس شامل يهدف إلى تعليمك كيفية استخدام
+          برنامج <strong>مايكروسوفت إكسيل</strong> من البداية حتى الاحتراف. في
+          هذا الكورس، ستتعلم كيفية تحميل البرنامج وتثبيته على جهازك، بالإضافة
+          إلى جميع الأساسيات التي تحتاج إليها لتكون قادرًا على التعامل مع إكسيل
+          بثقة وفعالية.
+        </p>
+        <p>
+          <strong>المحتويات الرئيسية للكورس:</strong>
+        </p>
+        <ul>
+          <li>
+            <strong>كيفية تحميل وتثبيت إكسيل:</strong> ستتعلم كيفية تنزيل برنامج
+            إكسيل وتثبيته على جهازك بسهولة.
+          </li>
+          <li>
+            <strong>إنشاء التقارير:</strong> كيفية إنشاء تقاريرك الخاصة باستخدام
+            إكسيل، وكيفية ربط البيانات بعضها ببعض بطريقة منظمة.
+          </li>
+          <li>
+            <strong>تنسيق التقارير:</strong> كيفية عرض التقارير بشكل مناسب
+            باستخدام <strong>الصور</strong>، <strong>الخرائط</strong>،
+            <strong>العروض التقديمية</strong>، <strong>الشارتات</strong> وغيرها
+            من الأدوات.
+          </li>
+          <li>
+            <strong>استخدام المعادلات:</strong> ستتعلم كيفية استخدام المعادلات
+            الجاهزة في إكسيل بالإضافة إلى كيفية إنشاء معادلاتك الخاصة.
+          </li>
+          <li>
+            <strong>البرمجة باستخدام VBA:</strong> سيتم تعليمك كيفية استخدام لغة
+            <strong>VBA</strong> (Visual Basic for Applications) لبرمجة معادلات
+            وأدوات مخصصة داخل إكسيل، مما يتيح لك أتمتة المهام وتخصيص وظائف
+            البرنامج.
+          </li>
+          <li>
+            <strong>استخدام الماكرو:</strong> كيفية استخدام
+            <strong>الماكرو</strong> لتوفير الوقت وتنفيذ المهام المتكررة بنقرة
+            واحدة، مما يسهل عملية إدارة البيانات.
+          </li>
+        </ul>
+        <p>
+          <strong>الفوائد الرئيسية للكورس:</strong>
+        </p>
+        <ul>
+          <li>
+            <strong>تعلم إكسيل من البداية حتى الاحتراف:</strong> مهما كانت
+            معرفتك السابقة بالبرنامج، فإن هذا الكورس سيأخذك خطوة بخطوة لتتعلم
+            المهارات الأساسية والمتقدمة في إكسيل.
+          </li>
+          <li>
+            <strong>تحليل البيانات وعرضها بطرق احترافية:</strong> ستتعلم كيفية
+            عرض وتحليل البيانات في شكل تقارير احترافية تتناسب مع احتياجاتك
+            الشخصية أو العملية.
+          </li>
+          <li>
+            <strong>زيادة الإنتاجية:</strong> من خلال تعلم البرمجة باستخدام VBA
+            والماكرو، ستتمكن من تحسين كفاءتك وتقليل الوقت المستغرق في إتمام
+            المهام المتكررة.
+          </li>
+        </ul>
+        <p>
+          كورس <strong>إكسيل</strong> هو الأداة المثالية لكل من يرغب في تحسين
+          مهاراته في التعامل مع البيانات والتحليل باستخدام إكسيل، سواء كنت
+          مبتدئًا أو لديك خبرة سابقة. عند إتمام هذا الكورس، ستكون قادرًا على
+          التعامل مع إكسيل بثقة وتفوق.
+        </p>
+      </div>
+    </div>
+    <!-- Add more portfolio items as needed -->
+    <script>
+      // جلب جميع العناصر التي تحمل class 'portfolio-item'
+      const portfolioItems = document.querySelectorAll(".portfolio-item");
+
+      // تكرار كل عنصر وتعيين الصورة الثابتة والصورة المتحركة عند الـ hover
+      portfolioItems.forEach((item) => {
+        const img = item.querySelector("img"); // جلب العنصر <img> داخل portfolio-item
+        const staticImage = item.getAttribute("data-static-image");
+        const gifImage = item.getAttribute("data-gif");
+
+        // تعيين الصورة الثابتة عند تحميل الصفحة
+        img.src = staticImage;
+
+        // إضافة تأثير الـ hover
+        img.addEventListener("mouseover", () => {
+          img.src = gifImage; // تغيير الصورة إلى GIF عند الـ hover
+        });
+
+        // إعادة الصورة الثابتة عند مغادرة الـ hover
+        img.addEventListener("mouseout", () => {
+          img.src = staticImage; // العودة إلى الصورة الثابتة عند مغادرة الـ hover
+        });
+      });
+    </script>
+
+    <div class="social-links">
+      <div class="image-hover-effect">
+        <a href="https://www.facebook.com/profile.php?id=100086216577033">
+          <img src="socials/facebook.png" alt="Image" />
+        </a>
+      </div>
+      <div class="image-hover-effect">
+        <a href="https://t.me/Ahmed_Topy_13">
+          <img src="socials/telegram.png" alt="Image" />
+        </a>
+      </div>
+      <div class="image-hover-effect">
+        <a href="https://www.tiktok.com/@Ahmed.topy.13">
+          <img src="socials/tiktok.png" alt="Image" />
+        </a>
+      </div>
+      <div class="image-hover-effect">
+        <a href="https://www.youtube.com/@Ahmed.Topy.13">
+          <img src="socials/youtube.png" alt="Image" />
+        </a>
+      </div>
+      <div class="image-hover-effect">
+        <a href="https://github.com/AhmedTopy13">
+          <img src="socials/github.png" alt="Image" />
+        </a>
+      </div>
+      <div class="image-hover-effect">
+        <a href="https://www.linkedin.com/in/ahmed-topy13">
+          <img src="socials/linkedin.png" alt="Image" />
+        </a>
+      </div>
+    </div>
+    <footer>
+      <p>© 2024 Ahmed Topy. All rights reserved.</p>
+    </footer>
+  </body>
+</html>
