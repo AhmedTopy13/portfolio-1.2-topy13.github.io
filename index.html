@@ -246,7 +246,7 @@
         let randomY2 = Math.random() * 100;
         let randomX3 = Math.random() * 100; /* نقطة نهاية عشوائية */
         let randomY3 = Math.random() * 100;
-        let randoms = Math.random()*2; /* نقطة نهاية عشوائية */
+        let randoms = Math.random() * 2; /* نقطة نهاية عشوائية */
 
         circle.style.setProperty("--start-x", randomX1 + "vw");
         circle.style.setProperty("--start-y", randomY1 + "vh");
@@ -258,22 +258,31 @@
       });
     </script>
     <header>
-      <div class="typing-container">
-        <span id="typing" style="font-family: 'Tajawal', serif"></span>
-        <div class="cursor"></div>
+      <div
+        style="
+          height: 100vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        "
+      >
+        <div class="typing-container">
+          <span id="typing" style="font-family: 'Tajawal', serif"></span>
+          <div class="cursor"></div>
+        </div>
       </div>
 
       <style>
         .typing-container {
           font-family: "Tajawal", serif;
-          font-size: 2.5rem;
+          font-size: 3.9rem;
           font-weight: bolder;
           color: rgba(255, 255, 255, 0.9);
           display: flex;
           align-items: center;
           justify-content: center;
         }
-        .typing-container .cursor {
+        .cursor {
           width: 20px;
           height: 5px;
           align-self: flex-end;
@@ -307,6 +316,43 @@
 
         // بدء الكتابة
         type();
+        document.addEventListener("DOMContentLoaded", () => {
+          const targetElement = document.querySelector(".typing-container");
+
+          // دالة التمرير البطيء مع الأنيميشن
+          function smoothScrollTo(element, duration) {
+            const start = window.pageYOffset; // الموضع الحالي
+            const end = element.getBoundingClientRect().top + start; // الموضع المستهدف
+            const distance = end - start;
+            let startTime = null;
+
+            function animationScroll(currentTime) {
+              if (!startTime) startTime = currentTime;
+
+              const elapsedTime = currentTime - startTime;
+              const progress = Math.min(elapsedTime / duration, 1); // نسبة التقدم (0 إلى 1)
+              const ease = easeInOutQuad(progress); // دالة تسهيل للحركة
+
+              window.scrollTo(0, start + distance * ease);
+
+              if (progress < 1) {
+                requestAnimationFrame(animationScroll); // استمر بالأنيميشن
+              }
+            }
+
+            // دالة تسهيل (Ease In-Out)
+            function easeInOutQuad(t) {
+              return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+            }
+
+            requestAnimationFrame(animationScroll);
+          }
+
+          // تنفيذ التمرير البطيء بعد تحميل الصفحة
+          setTimeout(() => {
+            smoothScrollTo(targetElement, 3000); // مدة التمرير 3 ثوانٍ
+          }, 2000); // تأخير 1 ثانية قبل بدء التمرير
+        });
       </script>
 
       <p>مبرمج مستقل وعندي خبرة في تطوير تطبيقات وبرامج متنوعة.</p>
