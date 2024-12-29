@@ -729,6 +729,35 @@
           img.src = staticImage; // العودة إلى الصورة الثابتة عند مغادرة الـ hover
         });
       });
+      
+      
+      document.addEventListener("DOMContentLoaded", function () {
+  // الحصول على جميع العناصر التي تحتوي على الصور
+  const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+  // إنشاء المراقب
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      const img = entry.target.querySelector('img'); // نستخدم الـ img مباشرةً هنا
+      const gifSrc = entry.target.getAttribute('data-gif');
+      const staticImageSrc = entry.target.getAttribute('data-static-image');
+
+      if (entry.isIntersecting) {
+        // عندما تكون الصورة في واجهة المستخدم، نغير المصدر إلى الـ GIF
+        img.src = gifSrc;
+      } else {
+        // إعادة الصورة الثابتة عندما تخرج من الواجهة
+        img.src = staticImageSrc;
+      }
+    });
+  }, { threshold: 0.5 }); // يبدأ المراقبة عندما تكون الصورة بنسبة 50% في واجهة المستخدم
+
+  // بدأ المراقبة لكل عنصر
+  portfolioItems.forEach(item => {
+    observer.observe(item);
+  });
+});
+
     </script>
 
     <div class="social-links">
