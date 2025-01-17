@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap");
+
 * {
   /* pointer-events: none; */
   -webkit-touch-callout: none;
@@ -57,7 +59,6 @@
 }
 
 /* استيراد الخطوط */
-@import url("https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap");
 
 /* إعدادات خلفية الصفحة */
 body {
