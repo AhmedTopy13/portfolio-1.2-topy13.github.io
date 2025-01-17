@@ -4,221 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Portfolio - Ahmed Topy</title>
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap");
-      body {
-        margin: 0;
-        font-family: "Tajawal", serif;
-        background-color: #121212;
-        color: #fff;
-        overflow-x: hidden;
-      }
-      header {
-        text-align: center;
-        padding: 2rem 1rem;
-        animation: fadeIn 2s ease-in-out;
-      }
-      header h1 {
-        font-size: 3rem;
-        margin-bottom: 0.5rem;
-      }
-      header p {
-        font-size: 1.2rem;
-        color: #aaa;
-      }
-      .portfolio-container {
-        display: flex; /* استخدام flexbox للتمرير */
-        flex-direction: column; /* التمرير عمودي */
-        overflow-y: auto; /* تمكين التمرير العمودي */
-        scroll-snap-type: y mandatory; /* تفعيل التقاط العنصر عند التمرير */
-        height: 100vh; /* ارتفاع العنصر الأب يكون مساويًا لارتفاع نافذة المتصفح */
-      }
-
-      .portfolio-item {
-        direction: rtl;
-        scroll-snap-align: start; /* جعل العنصر يلتقط عند بداية العنصر */
-        margin: 10px 0; /* ترك مسافة بين العناصر */
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: center;
-        margin: 2rem auto;
-        padding: 1rem;
-        max-width: 1200px;
-      }
-      .portfolio-title {
-        direction: rtl;
-        font-size: 36px; /* حجم الخط */
-        font-weight: bold; /* جعل الخط سميك */
-        text-align: center; /* محاذاة العنوان إلى المنتصف */
-        margin-bottom: 20px; /* مسافة بين العنوان والصورة */
-        color: #333; /* اللون */
-      }
-      .portfolio-item img {
-        max-width: 300px;
-        max-height: 600px;
-        margin: 1rem;
-        border-radius: 10px;
-        transition: transform 0.3s;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-      }
-      .portfolio-item img:hover {
-        transform: scale(1.05);
-      }
-      .portfolio-item .details {
-        max-width: 600px;
-        padding: 1rem;
-        text-align: center;
-      }
-      .portfolio-item .details h2 {
-        font-size: 2rem;
-        margin-bottom: 1rem;
-      }
-      .portfolio-item .details p {
-        font-size: 1rem;
-        color: #bbb;
-      }
-      .social-links {
-        text-align: center;
-        margin: 2rem 0;
-        display: flex;
-        justify-content: space-around; /* المسافة بين الصور */
-        gap: 20px; /* المسافة بين الصور */
-      }
-      .social-links a {
-        color: #00adb5;
-        margin: 0 1rem;
-        font-size: 1.5rem;
-        text-decoration: none;
-        transition: color 0.3s;
-      }
-      .social-links a:hover {
-        color: #ff5722;
-      }
-      footer {
-        text-align: center;
-        padding: 1rem;
-        background-color: #1f1f1f;
-        color: #888;
-      }
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(-20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-      .image-hover-effect img {
-        width: 30px; /* الحجم الأساسي للصورة */
-        height: auto;
-        transition: transform 0.3s ease, filter 0.3s ease; /* تأثير التكبير والتلوين */
-        filter: grayscale(1); /* الصورة تكون باللون الرمادي في البداية */
-      }
-      .image-hover-effect img:hover {
-        transform: scale(1.1); /* تكبير الصورة */
-        filter: grayscale(0); /* إلغاء التدرج الرمادي */
-      }
-
-      /* كود الخلفية*/
-      .background::before,
-      .background::after {
-        content: "";
-        position: relative;
-        width: 300px;
-        height: 300px;
-        background-color: rgba(255, 255, 255, 0.1);
-        border-radius: 50%;
-        animation: moveBackground 10s linear infinite;
-      }
-
-      .background::before {
-        top: -50px;
-        left: -50px;
-        animation-delay: 0s;
-      }
-
-      .background::after {
-        bottom: -50px;
-        right: -50px;
-        animation-delay: 5s;
-      }
-
-      /* حركة الخلفية */
-      @keyframes moveBackground {
-        0% {
-          transform: translateX(0) translateY(0);
-        }
-        100% {
-          transform: translateX(100hw) translateY(100vw);
-        }
-      }
-
-      /* حركة الدوائر */
-      .circle {
-        position: absolute;
-        width: 80px; /* حجم أصغر للدوائر */
-        height: 80px;
-        background-color: rgba(255, 255, 255, 0.1);
-        border-radius: 50%;
-        animation: animateCircle 10s linear infinite;
-      }
-
-      /* أماكن وضع الدوائر بشكل عشوائي */
-      .circle:nth-child(1) {
-        animation-duration: 25s;
-      }
-
-      .circle:nth-child(2) {
-        animation-duration: 15s;
-      }
-
-      .circle:nth-child(3) {
-        animation-duration: 10s;
-      }
-
-      .circle:nth-child(4) {
-        animation-duration: 20s;
-      }
-
-      /* حركة الدوائر بشكل عشوائي */
-      .circle {
-        --start-x: calc(100vw * random());
-        --start-y: calc(100vh * random());
-        --end-x: calc(100vw * random());
-        --end-y: calc(100vh * random());
-      }
-
-      @keyframes animateCircle {
-        0% {
-          transform: translate(var(--start-x), var(--start-y));
-          opacity: 0; /* بداية الشفافية صفر */
-          scale: 0.2;
-        }
-        25% {
-          transform: translate(
-            var(--mid-x),
-            var(--mid-y)
-          ); /* نقطة منتصف الحركة */
-          opacity: 1; /* الظهور تدريجياً */
-        }
-        50% {
-          transform: translate(var(--end-x), var(--end-y)); /* نقطة النهاية */
-          opacity: 0.5; /* التلاشي الجزئي */
-          scale: 2;
-        }
-        100% {
-          transform: translate(
-            var(--start-x),
-            var(--start-y)
-          ); /* العودة لنقطة البداية */
-          opacity: 1; /* العودة للظهور */
-        }
-      }
-      /*نهاية كود الخلفية*/
-    </style>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div
@@ -238,25 +24,7 @@
       <div class="circle"></div>
       <div class="circle"></div>
     </div>
-    <script>
-      document.querySelectorAll(".circle").forEach((circle) => {
-        let randomX1 = Math.random() * 100; /* نقطة بداية عشوائية */
-        let randomY1 = Math.random() * 100;
-        let randomX2 = Math.random() * 100; /* نقطة منتصف عشوائية */
-        let randomY2 = Math.random() * 100;
-        let randomX3 = Math.random() * 100; /* نقطة نهاية عشوائية */
-        let randomY3 = Math.random() * 100;
-        let randoms = Math.random() * 2; /* نقطة نهاية عشوائية */
 
-        circle.style.setProperty("--start-x", randomX1 + "vw");
-        circle.style.setProperty("--start-y", randomY1 + "vh");
-        circle.style.setProperty("--mid-x", randomX2 + "vw");
-        circle.style.setProperty("--mid-y", randomY2 + "vh");
-        circle.style.setProperty("--end-x", randomX3 + "vw");
-        circle.style.setProperty("--end-y", randomY3 + "vh");
-        circle.style.setProperty("--scale", randoms);
-      });
-    </script>
     <header>
       <div
         style="
@@ -272,89 +40,6 @@
         </div>
       </div>
 
-      <style>
-        .typing-container {
-          font-family: "Tajawal", serif;
-          font-size: 3.9rem;
-          font-weight: bolder;
-          color: rgba(255, 255, 255, 0.9);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-        .cursor {
-          width: 20px;
-          height: 5px;
-          align-self: flex-end;
-          background-color: #d8dcc7;
-          margin-left: 5px;
-          animation: blink 0.8s step-end infinite;
-        }
-
-        @keyframes blink {
-          0% {
-            opacity: 1;
-          }
-          50% {
-            opacity: 0;
-          }
-        }
-      </style>
-
-      <script>
-        const text = "Ahmed Topy"; // النص اللي عاوز تكتبه
-        const typingElement = document.getElementById("typing");
-        let index = 0;
-
-        function type() {
-          if (index < text.length) {
-            typingElement.textContent += text.charAt(index);
-            index++;
-            setTimeout(type, 150); // سرعة الكتابة
-          }
-        }
-
-        // بدء الكتابة
-        type();
-        document.addEventListener("DOMContentLoaded", () => {
-          const targetElement = document.querySelector(".typing-container");
-
-          // دالة التمرير البطيء مع الأنيميشن
-          function smoothScrollTo(element, duration) {
-            const start = window.pageYOffset; // الموضع الحالي
-            const end = element.getBoundingClientRect().top + start; // الموضع المستهدف
-            const distance = end - start;
-            let startTime = null;
-
-            function animationScroll(currentTime) {
-              if (!startTime) startTime = currentTime;
-
-              const elapsedTime = currentTime - startTime;
-              const progress = Math.min(elapsedTime / duration, 1); // نسبة التقدم (0 إلى 1)
-              const ease = easeInOutQuad(progress); // دالة تسهيل للحركة
-
-              window.scrollTo(0, start + distance * ease);
-
-              if (progress < 1) {
-                requestAnimationFrame(animationScroll); // استمر بالأنيميشن
-              }
-            }
-
-            // دالة تسهيل (Ease In-Out)
-            function easeInOutQuad(t) {
-              return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-            }
-
-            requestAnimationFrame(animationScroll);
-          }
-
-          // تنفيذ التمرير البطيء بعد تحميل الصفحة
-          setTimeout(() => {
-            smoothScrollTo(targetElement, 3000); // مدة التمرير 3 ثوانٍ
-          }, 2000); // تأخير 1 ثانية قبل بدء التمرير
-        });
-      </script>
-
       <p>مبرمج مستقل وعندي خبرة في تطوير تطبيقات وبرامج متنوعة.</p>
     </header>
     <div
@@ -362,8 +47,8 @@
       data-static-image="imgs/3papers.jpg"
       data-gif="imgs/3papers.gif"
     >
-      <h1 class="portfolio-title" style="direction: ltr">3 Papers</h1>
-      <img src="imgs/3papers.jpg" alt="برنامج خلفيات متحركة" />
+      <h1 class="portfolio-title" style="direction: ltr" >3 Papers</h1>
+      <img src="imgs/3papers.jpg" alt="برنامج خلفيات متحركة"  />
       <div class="details" style="text-align: start; direction: rtl">
         <h2>برنامج خلفيات متحركة</h2>
         <p>برنامج مميز لإنشاء وتخصيص خلفيات متحركة للأندرويد.</p>
@@ -706,59 +391,6 @@
       </div>
     </div>
     <!-- Add more portfolio items as needed -->
-    <script>
-      // جلب جميع العناصر التي تحمل class 'portfolio-item'
-      const portfolioItems = document.querySelectorAll(".portfolio-item");
-
-      // تكرار كل عنصر وتعيين الصورة الثابتة والصورة المتحركة عند الـ hover
-      portfolioItems.forEach((item) => {
-        const img = item.querySelector("img"); // جلب العنصر <img> داخل portfolio-item
-        const staticImage = item.getAttribute("data-static-image");
-        const gifImage = item.getAttribute("data-gif");
-
-        // تعيين الصورة الثابتة عند تحميل الصفحة
-        img.src = staticImage;
-
-        // إضافة تأثير الـ hover
-        img.addEventListener("mouseover", () => {
-          img.src = gifImage; // تغيير الصورة إلى GIF عند الـ hover
-        });
-
-        // إعادة الصورة الثابتة عند مغادرة الـ hover
-        img.addEventListener("mouseout", () => {
-          img.src = staticImage; // العودة إلى الصورة الثابتة عند مغادرة الـ hover
-        });
-      });
-      
-      
-      document.addEventListener("DOMContentLoaded", function () {
-  // الحصول على جميع العناصر التي تحتوي على الصور
-  const portfolioItems = document.querySelectorAll('.portfolio-item');
-
-  // إنشاء المراقب
-  const observer = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-      const img = entry.target.querySelector('img'); // نستخدم الـ img مباشرةً هنا
-      const gifSrc = entry.target.getAttribute('data-gif');
-      const staticImageSrc = entry.target.getAttribute('data-static-image');
-
-      if (entry.isIntersecting) {
-        // عندما تكون الصورة في واجهة المستخدم، نغير المصدر إلى الـ GIF
-        img.src = gifSrc;
-      } else {
-        // إعادة الصورة الثابتة عندما تخرج من الواجهة
-        img.src = staticImageSrc;
-      }
-    });
-  }, { threshold: 0.5 }); // يبدأ المراقبة عندما تكون الصورة بنسبة 50% في واجهة المستخدم
-
-  // بدأ المراقبة لكل عنصر
-  portfolioItems.forEach(item => {
-    observer.observe(item);
-  });
-});
-
-    </script>
 
     <div class="social-links">
       <div class="image-hover-effect">
@@ -793,7 +425,8 @@
       </div>
     </div>
     <footer>
-      <p>© 2024 Ahmed Topy. All rights reserved.</p>
+      <p>© 2024 Ahmed Topy. All rights reserved.4</p>
     </footer>
+    <script src="script.js"></script>
   </body>
 </html>
