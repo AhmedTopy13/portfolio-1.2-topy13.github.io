@@ -175,8 +175,10 @@ header p {
   transform: translateX(-50%); /* التوسيط التام */
   z-index: 10;
   transition: all 0.3s ease;
-  backdrop-filter: blur(8px); /* تأثير بلور على الخلفية */
-  background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)); /* تدرج لوني شفاف */
+  background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.05)); /* تدرج لوني شفاف */
+  backdrop-filter: blur(9px); /* تأثير بلور على الخلفية */
+  /* mask-image: linear-gradient(to bottom, black, transparent);
+      -webkit-mask-image: linear-gradient(to top, black, transparent); */
   padding: 10px;
   border-radius: 20px;
   width: auto; /* العرض يتناسب مع العناصر داخلها */
@@ -189,6 +191,7 @@ header p {
   }
   .social-links {
     gap: 15px; /* المسافة بين العناصر أكبر */
+    height: auto;
   }
 }
 
@@ -200,6 +203,7 @@ header p {
   }
   .social-links {
     gap: 12px; /* تقليل المسافة بين العناصر */
+    height: auto;
   }
 }
 
@@ -211,6 +215,7 @@ header p {
   }
   .social-links {
     gap: 10px; /* تقليل المسافة بين العناصر */
+    height: auto;
   }
 }
 
@@ -222,6 +227,7 @@ header p {
   }
   .social-links {
     gap: 8px; /* تقليل المسافة بين العناصر أكثر */
+    height: auto;
   }
 }
 
@@ -233,6 +239,7 @@ header p {
   }
   .social-links {
     gap: 1px; /* تقليل المسافة بين العناصر بشكل أكبر */
+    height: auto;
   }
 }
 
@@ -271,7 +278,7 @@ header p {
 
 /* تأثير تكبير الصورة عند التمرير */
 .image-hover-effect img:hover {
-  transform: scale(1.1);
+  transform: scale(1.3);
   filter: grayscale(0); /* إلغاء التدرج الرمادي عند التمرير */
 }
 

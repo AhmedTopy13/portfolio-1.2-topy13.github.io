@@ -71,7 +71,7 @@ function type() {
 // دالة التمرير البطيء مع الأنيميشن
 function smoothScrollTo(element, duration) {
   const start = window.pageYOffset; // الموضع الحالي
-  const end = element.getBoundingClientRect().top + start; // الموضع المستهدف
+  const end = element.getBoundingClientRect().top + start - 10; // الموضع المستهدف
   const distance = end - start;
   let startTime = null;
 
@@ -108,7 +108,7 @@ function smoothScrollTo(element, duration) {
 document.addEventListener("DOMContentLoaded", () => {
   window.scrollTo(0, 0); // التمرير إلى أعلى الصفحة عند تحميلها
 
-  const targetElement = document.querySelector(".typing-container");
+  const targetElement = document.querySelector(".desc");
 
   // تأكد من عدم حدوث تمرير قبل بدء الأنيميشن
   setTimeout(() => {
