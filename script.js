@@ -30,6 +30,7 @@ portfolioItems.forEach((item) => {
   const gifImage = item.getAttribute("data-gif");
 
   // تعيين الصورة الثابتة عند تحميل الصفحة
+  img.src = gifImage;
   img.src = staticImage;
 
   // إضافة حدث الـ hover لتغيير الصورة إلى الـ GIF عند التمرير
