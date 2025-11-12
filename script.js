@@ -147,3 +147,10 @@ window.addEventListener('load', () => {
     });
   });
 });
+const base = window.location.pathname.includes('portfolio-1.2-topy13.github.io')
+    ? '/portfolio-1.2-topy13.github.io/'
+    : '/';
+
+  function goToProject(folder) {
+    window.location.href = base + 'Projects/' + folder + '/index.html';
+  }
