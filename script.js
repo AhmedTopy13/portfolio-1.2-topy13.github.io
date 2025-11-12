@@ -33,9 +33,45 @@ function onElementInOutScreenCenter(element, onEnter, onExit, visibilityRatio = 
 // التعامل مع عناصر البورتفوليو
 document.querySelectorAll(".portfolio-item").forEach((item) => {
   const img = item.querySelector("img");
+// منع القائمة الافتراضية والكليك اليمين واللمسات المتعددة
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("mousedown", e => e.button === 2 && e.preventDefault());
+document.addEventListener("touchstart", e => e.touches.length > 1 && e.preventDefault());
+
+// ملاحظة: بتتعامل مع عنصر واحد فقط في كل استدعاء
+function onElementInOutScreenCenter(element, onEnter, onExit, visibilityRatio = 0.5) {
+ let wasVisible = false;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const isVisible = entry.intersectionRatio >= visibilityRatio;
+
+        if (isVisible && !wasVisible) {
+          wasVisible = true;
+          onEnter?.(entry.target);
+        } else if (!isVisible && wasVisible) {
+          wasVisible = false;
+          onExit?.(entry.target);
+        }
+      });
+    },
+    {
+      threshold: Array.from({ length: 101 }, (_, i) => i / 100) // من 0 إلى 1 بـ 0.01
+    }
+  );
+
+  observer.observe(element);
+}
+
+
+// التعامل مع عناصر البورتفوليو
+document.querySelectorAll(".portfolio-item").forEach((item) => {
+  const img = item.querySelector("img");
   const staticImage = item.getAttribute("data-static-image");
   const gifImage = item.getAttribute("data-gif");
 
+  // تعيين الصورة الثابتة كبداية
   // تعيين الصورة الثابتة كبداية
   img.src = staticImage;
 
@@ -49,9 +85,20 @@ document.querySelectorAll(".portfolio-item").forEach((item) => {
   // تغييرات الصورة على hover
   img.addEventListener("mouseover", () => img.src = gifImage);
   img.addEventListener("mouseout", () => img.src = staticImage);
+  // تغيير الصورة عند الدخول أو الخروج من منتصف الشاشة
+  onElementInOutScreenCenter(
+    img,
+    () => img.src = gifImage,
+    () => img.src = staticImage
+  );
+
+  // تغييرات الصورة على hover
+  img.addEventListener("mouseover", () => img.src = gifImage);
+  img.addEventListener("mouseout", () => img.src = staticImage);
 });
 
 // النص الذي سيتم كتابته بشكل تدريجي
+const text = "Ahmed Topy";
 const text = "Ahmed Topy";
 const typingElement = document.getElementById("typing");
 let index = 0;
@@ -68,6 +115,7 @@ function type() {
 // دالة التمرير البطيء مع الأنيميشن
 function smoothScrollTo(element, duration) {
   const start = window.pageYOffset; // الموضع الحالي
+  const end = element.getBoundingClientRect().top + start - 10; // الموضع المستهدف
   const end = element.getBoundingClientRect().top + start - 10; // الموضع المستهدف
   const distance = end - start;
   let startTime = null;
@@ -106,6 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
   window.scrollTo(0, 0); // التمرير إلى أعلى الصفحة عند تحميلها
 
   const targetElement = document.querySelector(".desc");
+  const targetElement = document.querySelector(".desc");
 
   // تأكد من عدم حدوث تمرير قبل بدء الأنيميشن
   setTimeout(() => {
@@ -140,6 +189,11 @@ document.querySelectorAll(".circle").forEach((circle) => {
 window.addEventListener('load', () => {
   // استدعاء الحدث بعد تحميل الصفحة بالكامل
   document.querySelectorAll('img').forEach(img => {
+    img.addEventListener('contextmenu', (event) => {
+      if (event.button === 2) { // تحقق من أن الزر الذي تم الضغط عليه هو الزر الأيمن
+        event.preventDefault(); // منع السلوك الافتراضي (ظهور قائمة السياق)
+      }
+    });
     img.addEventListener('contextmenu', (event) => {
       if (event.button === 2) { // تحقق من أن الزر الذي تم الضغط عليه هو الزر الأيمن
         event.preventDefault(); // منع السلوك الافتراضي (ظهور قائمة السياق)
