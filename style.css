@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap");
+
 * {
   /* pointer-events: none; */
   -webkit-touch-callout: none;
@@ -5,6 +7,7 @@
   -moz-user-select: none;    /* لمنع التحديد في Firefox */
   -ms-user-select: none;     /* لمنع التحديد في IE */
   user-select: none;         /* تعميم لمنع التحديد */
+  font-family: "Tajawal", serif;
 }
 
 
@@ -57,7 +60,6 @@
 }
 
 /* استيراد الخطوط */
-@import url("https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap");
 
 /* إعدادات خلفية الصفحة */
 body {
@@ -173,8 +175,10 @@ header p {
   transform: translateX(-50%); /* التوسيط التام */
   z-index: 10;
   transition: all 0.3s ease;
-  backdrop-filter: blur(8px); /* تأثير بلور على الخلفية */
-  background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)); /* تدرج لوني شفاف */
+  background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.05)); /* تدرج لوني شفاف */
+  backdrop-filter: blur(9px); /* تأثير بلور على الخلفية */
+  /* mask-image: linear-gradient(to bottom, black, transparent);
+      -webkit-mask-image: linear-gradient(to top, black, transparent); */
   padding: 10px;
   border-radius: 20px;
   width: auto; /* العرض يتناسب مع العناصر داخلها */
@@ -187,6 +191,7 @@ header p {
   }
   .social-links {
     gap: 15px; /* المسافة بين العناصر أكبر */
+    height: auto;
   }
 }
 
@@ -198,6 +203,7 @@ header p {
   }
   .social-links {
     gap: 12px; /* تقليل المسافة بين العناصر */
+    height: auto;
   }
 }
 
@@ -209,6 +215,7 @@ header p {
   }
   .social-links {
     gap: 10px; /* تقليل المسافة بين العناصر */
+    height: auto;
   }
 }
 
@@ -220,6 +227,7 @@ header p {
   }
   .social-links {
     gap: 8px; /* تقليل المسافة بين العناصر أكثر */
+    height: auto;
   }
 }
 
@@ -231,6 +239,7 @@ header p {
   }
   .social-links {
     gap: 1px; /* تقليل المسافة بين العناصر بشكل أكبر */
+    height: auto;
   }
 }
 
@@ -269,7 +278,7 @@ header p {
 
 /* تأثير تكبير الصورة عند التمرير */
 .image-hover-effect img:hover {
-  transform: scale(1.1);
+  transform: scale(1.3);
   filter: grayscale(0); /* إلغاء التدرج الرمادي عند التمرير */
 }
 
@@ -386,4 +395,21 @@ footer {
     transform: translate(var(--start-x), var(--start-y));
     opacity: 1;
   }
+}
+
+.ProjectButton {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #121212;
+  font-weight: bolder;
+  border: none;
+  padding: 10px 60px;
+  font-size: 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease 0s, color 0.3s ease 0s, scale 0.3s ease 0s;
+}
+.ProjectButton:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  scale: 1.07;
 }
